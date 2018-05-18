@@ -8,17 +8,17 @@
 import Foundation
 
 struct Donation: Codable {
-    let user: String
+    let username: String
     let team: String
     var amount: Double
 }
 
 struct Donator {
-    let user: String
+    let username: String
     var donations = [String: Double]()
 }
 
-let teams: [String] = ["team1","team2", "team3", "team4", "team5",  "team6"]
+let teams: [String] = ["Ada Lovelace","Grace Hopper", "Marie Curie", "Rosalind Franklin", "Katherine Johnson",  "Mae Jemison"]
 
 let userCap: Double = 1000
 let unlimitedUser: String = "thinkit"

@@ -12,7 +12,7 @@ import KituraStencil
 public let projectPath = ConfigurationManager.BasePath.project.path
 public let health = Health()
 extension Donation: Model {
-    static var idColumnName = "user"
+
 }
 class Persistence {
     static func setUp() {
@@ -21,7 +21,9 @@ class Persistence {
             let pool = PostgreSQLConnection.createPool(url: url, poolOptions: ConnectionPoolOptions(initialCapacity: 1, maxCapacity: 4, timeout: 10000))
             Database.default = Database(pool)
         } else {
-            print("failed to get databaseURL")
+            print("Couldn't get databaseURL envar. creating local database")
+            let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+            Database.default = Database(pool)
         }
     }
 }
@@ -36,7 +38,9 @@ public class App {
 
     func postInit() throws {
         // Middleware
-        router.get("/teams", middleware: StaticFileServer())
+        let sfsOptions = StaticFileServer.Options(possibleExtensions: ["html"])
+        router.get("/teams", middleware: StaticFileServer(options: sfsOptions))
+        router.all("/", middleware: StaticFileServer(path: "./public", options: sfsOptions))
         router.add(templateEngine: StencilTemplateEngine())
         // Endpoints
         initializeHealthRoutes(app: self)
@@ -48,7 +52,6 @@ public class App {
         }
         router.post("/input", handler: donationHandler)        
         router.get("/scores") { request, response, next in
-            var context: [String: Any] = ["donations": []]
             var teamScores = [String: Double]()
             Donation.findAll { donations, error in
                 guard let donations = donations else {
@@ -57,12 +60,32 @@ public class App {
                 for donation in donations {
                     teamScores[donation.team] = donation.amount + (teamScores[donation.team] ?? 0)
                 }
-                context["donations"] = teamScores
+                var context: [String: [[String:Any]]] = ["donations" :[]]
+                for team in teams {
+                    context["donations"]?.append(["team": team, "amount": String(teamScores[team] ?? 0)])
+                }
                 print("scores context: \(context)")
                 do {
                     try response.render("scores.stencil", context: context)
                 } catch {
                     print("failed to render stencil")
+                }
+                next()
+            }
+        }
+        router.get("/alldonations") { request, response, next in
+            Donation.findAll { donations, error in
+                guard let donations = donations else {
+                    return next()
+                }
+                var context: [String: [[String:Any]]] = ["donations": []]
+                for donation in donations {
+                    context["donations"]?.append(["team": donation.team, "user": donation.username, "amount": donation.amount])
+                }
+                do {
+                    try response.render("alldonations.stencil", context: context)
+                } catch {
+                    print("failed to render alldonations stencil")
                 }
                 next()
             }
@@ -76,22 +99,28 @@ public class App {
         }
         
         router.get("/donators") { request, response, next in
+            print("request query parameters: \(request.queryParameters)")
             guard let requestDonator = request.queryParameters["donator"] else {
                 try response.render("seeDonations.stencil", context: [:]).end()
                 return
             }
-            var context: [String: Any] = ["Donator": []]
-            var donator = Donator(user: requestDonator, donations: [:])
+
+            var donator = Donator(username: requestDonator, donations: [:])
             Donation.findAll { donations, error in
                 guard let donations = donations else {
                     return next()
                 }
                 for donation in donations {
-                    if donation.user == requestDonator {
+                    if donation.username == requestDonator {
                         donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
                     }
                 }
-                context["Donator"] = donator
+                var context: [String:Any] = ["donator": requestDonator]
+                var tempTeams: [[String:Any]] = []
+                for team in teams {
+                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0])
+                }
+                context["teams"] = tempTeams
                 print("donator context: \(context)")
                 do {
                     try response.render("donator.stencil", context: context)
@@ -105,15 +134,19 @@ public class App {
     }
     
     func donationHandler(donation: Donation, completion: @escaping (Donation?, RequestError?) -> Void) {
+        print("recieved donation: \(donation)")
         Donation.findAll() { allDonations, error in
-            let existingUser = allDonations?.filter({$0.user == donation.user})
+            let existingUser = allDonations?.filter({$0.username == donation.username})
             let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
-            if donation.user == unlimitedUser || totalDonations + donation.amount <= userCap {
+            if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+                print("saved full donation: \(donation)")
                 donation.save(completion)
-            } else if totalDonations <= userCap {
-                let adjustedDonation = Donation(user: donation.user, team: donation.team, amount: userCap - totalDonations)
+            } else if totalDonations < userCap {
+                let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
+                print("saved partial donation: \(adjustedDonation)")
                 adjustedDonation.save(completion)
             } else {
+                print("Donator out of money: \(donation)")
                 completion(nil, .notAcceptable)
             }
         }

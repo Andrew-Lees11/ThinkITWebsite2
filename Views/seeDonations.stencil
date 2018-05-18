@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<title>ThinkIT Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+.w3-bar-block .w3-bar-item {padding:20px}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 15px;
+  text-decoration: none;
+  font-size: 19px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+</style>
+<body>
+
+<div class="navbar">
+  <a href="/">Home</a>
+  <a href="/scores">scores</a>
+  <a href="/donators">See Donations</a>
+  <a href="/donate">How to Donate</a>
+</div>
+
+<!-- About Section -->
+<div class="w3-container w3-padding-32 w3-center">
+  <h4></h4><br>
+  <h1>View Donations page</h1><br>
+ <div class="w3-padding-10">
+    <h4><b>To view your donations and remaining money please enter your twitter ID in the form below</b></h4>
+  </div>
+</div>
+<hr>
+
+<div class="w3-container w3-padding-32 w3-center">
+    <h4>View your Donations</h4>
+    <form action="donators" method="get">
+        Twitter Handle: <input type="text" name="donator" required="required"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<!-- End page content -->
+</div>
+
+</body>
+</html>
