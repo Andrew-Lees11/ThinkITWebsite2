@@ -37,6 +37,48 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
+table {
+  background: white;
+  border-radius: 3px;
+  border-collapse: collapse;
+  margin: auto;
+  max-width: 60%;
+  width: 100%;
+  box-shadow: 0 5px 10px lightgrey;
+}
+
+th {
+  color: white;
+  background: #66dab9;
+  border-bottom: 4px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  font-size: 23px;
+  font-weight: 100;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.small {
+  width: 60px;
+  height: auto;
+}
+
+tr {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  color: #333;
+  font-size: 16px;
+}
+
+td {
+  background: white;
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 18px;
+  border-right: 1px solid lightgrey;
+}
 </style>
 <body>
 
@@ -44,20 +86,32 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <!-- Top menu -->
 <div class="navbar">
   <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donate</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/help">Help</a>
 </div>
 
 
 <div class="w3-container w3-padding-32 w3-center">
-      <h4></h4><br>
-      <h1>Your donations page</h1><br>
-     <div class="w3-padding-10">
-    {% for donation in donations %}
-    {{ donation.team }} has a score of {{ donation.amount }}<br>
-    {% endfor %}
-</div>
+  <h4></h4><br>
+   <div class="w3-padding-10">
+     <table>
+      <tr>
+        <th>Team</th>
+        <th>Donations</th>
+      </tr>
+      {% for donation in donations %}
+        <tr>
+          <td>
+            <img class="small" src="../public/images/{{ donation.team }}/logo.svg">
+            {{ donation.team }}
+          </td>
+          <td>{{ donation.amount }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 
 </body>

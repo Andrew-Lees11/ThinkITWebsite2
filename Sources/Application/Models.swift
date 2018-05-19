@@ -18,7 +18,7 @@ struct Donator {
     var donations = [String: Double]()
 }
 
-let teams: [String] = ["Ada Lovelace","Grace Hopper", "Marie Curie", "Rosalind Franklin", "Katherine Johnson",  "Mae Jemison"]
+let teams: [String] = ["Ada Lovelace","Grace Hopper", "Marie Curie", "Rosalind Franklin", "Katherine Johnson", "Mae Jemison"]
 
 let userCap: Double = 1000
 let unlimitedUser: String = "thinkit"

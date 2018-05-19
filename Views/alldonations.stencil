@@ -42,9 +42,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 
 <div class="navbar">
   <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donate</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/help">Help</a>
 </div>
 
 <!-- About Section -->
@@ -59,8 +60,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
         </b></h4>
   </div>
 </div>
-<hr>
-
 
 <!-- End page content -->
 </div>
