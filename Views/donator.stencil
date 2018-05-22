@@ -71,10 +71,10 @@ progress, progress[role] {
   width: 70%;
 }
 
-.team-1::-webkit-progress-value {
+.team-Ada Lovelace::-webkit-progress-value {
   background: red;
 }
-.team-1::-moz-progress-bar {
+.team-Ada Lovelace::-moz-progress-bar {
   background: red;
 }
 .team-2::-webkit-progress-value {
@@ -138,11 +138,11 @@ progress, progress[role] {
 
   <h2>Hi <b>{{ donator }}</b>! Your donations are:</h2>
   <ul class="team-list">
-    {% for (index, team) in teams %}
+    {% for eachTeam in teams %}
     <li class="team">
-     <div class="team-name">{{ team.team }}</div>
-     <progress class="team-{{ index }}" max="1000" value="{{ team.amount }}">
-       <strong>Amount: {{ team.amount }}</strong>
+     <div class="team-name">{{ eachTeam.team }}</div>
+     <progress class="team-{{ eachTeam.index }}" max="1000" value="{{ eachTeam.amount }}">
+       <strong>Amount: {{ eachTeam.amount }}</strong>
      </progress>
    </li>
    {% endfor %}

@@ -100,25 +100,29 @@ public class App {
         
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
-            guard let requestDonator = request.queryParameters["donator"] else {
+            guard let donatorName = request.queryParameters["donator"]?.lowercased() else {
                 try response.render("seeDonations.stencil", context: [:]).end()
                 return
             }
-
+            let requestDonator = "tweets/\(donatorName)"
             var donator = Donator(username: requestDonator, donations: [:])
             Donation.findAll { donations, error in
                 guard let donations = donations else {
                     return next()
                 }
+                print("donations: \(donations)")
                 for donation in donations {
-                    if donation.username == requestDonator {
+                    if donation.username.lowercased() == requestDonator {
                         donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
                     }
                 }
+                print("donator.donations[donation.team]: \(donator.donations)")
+                print("requestDonator: \(requestDonator)")
                 var context: [String:Any] = ["donator": requestDonator]
+                print("context: \(context)")
                 var tempTeams: [[String:Any]] = []
-                for team in teams {
-                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0])
+                for (index, team) in teams.enumerated() {
+                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0, "index": index])
                 }
                 context["teams"] = tempTeams
                 print("donator context: \(context)")

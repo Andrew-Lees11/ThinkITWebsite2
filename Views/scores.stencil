@@ -104,7 +104,7 @@ td {
       {% for donation in donations %}
         <tr>
           <td>
-            <img class="small" src="../public/images/{{ donation.team }}/logo.svg">
+            <img class="small" src="images/{{ donation.team }}/logo.svg">
             {{ donation.team }}
           </td>
           <td>{{ donation.amount }}</td>
