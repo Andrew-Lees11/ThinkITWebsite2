@@ -98,11 +98,6 @@ public class App {
             next()
         }
 
-        router.get("/help") { request, response, next in
-            try response.render("Help.html")
-            next()
-        }
-
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
             guard let donatorName = request.queryParameters["donator"]?.lowercased() else {
