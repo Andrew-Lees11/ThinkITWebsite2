@@ -1,4 +1,4 @@
-ThinkIT Website
+ThinkIT Website 
 
 Should be being hosted at [https://thinkitwebsite.eu-gb.mybluemix.net/](https://thinkitwebsite.eu-gb.mybluemix.net/)
 
