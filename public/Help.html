@@ -62,13 +62,53 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 }
 
 pre {
-    white-space: pre-wrap;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 10px;
-    background: #d3d3d380;
-    border-radius: 10px;
-    border: 1px solid lightgrey;
+  white-space: pre-wrap;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background: #d3d3d380;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+}
+
+table {
+  background: white;
+  border-radius: 3px;
+  border-collapse: collapse;
+  border: 1px solid lightgrey;
+}
+
+th {
+  color: white;
+  text-align: left;
+  vertical-align: middle;
+}
+
+tr {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+td {
+  background: white;
+  padding: 10px;
+  text-align: left;
+  vertical-align: middle;
+  border-right: 1px solid lightgrey;
+}
+
+progress, progress[role] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-size: auto;
+  height: 50px;
+  width: 70%;
+}
+
+.team-1::-webkit-progress-value {
+  background: red;
 }
 
 </style>
@@ -169,10 +209,22 @@ pre {
 
 <div class="row">
   <div class="col col-left">
-    <button class="square bronze">Bronze</button>
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=@thinkITdemo%20%23VoteAdaLovelace%20Donate%20%C2%A350"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
   </div>
   <div class="col col-right">
-    <pre><code>&lt;button class=&quot;square bronze&quot; ng-click="sendBronze()"&gt;Bronze&lt;/button&gt;</code></pre>
+    <pre><code>&lt;script type=&quot;stext/javascript&quot; async src=&quot;https://platform.twitter.com/widgets.js&quot;&gt;&lt;/script&gt;
+    &lt;a class=&quot;stwitter-share-button&quot;s
+      href=&quot;https://twitter.com/intent/tweet?text=@thinkITdemo%20%23VoteTeamName%20Donate%20%C2%A350&quot;
+      data-size=&quot;large&quot;
+      data-url=&quot;a&quot;
+      >
+    Tweet&lt;/a&gt;</code></pre>
   </div>
 </div>
 
@@ -180,32 +232,10 @@ pre {
 
 <div class="row">
   <div class="col col-left">
-    <button class="rounded silver">Silver</button>
+    <img src="images/thinkit.png" width="200" height="200">
   </div>
   <div class="col col-right">
-    <pre><code>&lt;button class=&quot;rounded silver&quot; ng-click="sendSilver()"&gt;Silver&lt;/button&gt;</code></pre>
-  </div>
-</div>
-
-<hr>
-
-<div class="row">
-  <div class="col col-left">
-    <button class="circle gold">Gold</button>
-  </div>
-  <div class="col col-right">
-    <pre><code>&lt;button class=&quot;circle gold&quot; ng-click="sendGold()"&gt;Gold&lt;/button&gt;</code></pre>
-  </div>
-</div>
-
-<hr>
-
-<div class="row">
-  <div class="col col-left">
-    <img src="images/rubix.png" width="400" height="400">
-  </div>
-  <div class="col col-right">
-    <pre><code>&lt;img src=&quot;images/logo.svg&quot; width=&quot;400&quot; height=&quot;400&quot;&gt;</code></pre>
+    <pre><code>&lt;img src=&quot;images/thinkit.png&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;</code></pre>
   </div>
 </div>
 
@@ -224,10 +254,76 @@ pre {
 
 <div class="row">
   <div class="col col-left">
-    £25 raised
+    <ul>
+      <li> Entry 1</li>
+      <li> Entry 2</li>
+    </ul>
   </div>
   <div class="col col-right">
-    <pre><code ng-non-bindable>£{{raised}} raised</code></pre>
+    <pre><code ng-non-bindable>    &lt;ul&gt;
+      {% for entry in entries %}
+        &lt;li&gt; {{ entry }}&lt;/li&gt;
+        &lt;li&gt; {{ entry }}&lt;/li&gt;
+      {% endfor %}
+    &lt;/ul&gt;</code></pre>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col col-left">
+    <table>
+      <thead>
+        <tr>
+            <td>Column 1</td>
+            <td>Column 2</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> Row 1 value 1 </td>
+          <td> Row 1 value 2 </td>
+        </tr>
+        <tr>
+          <td> Row 2 value 1 </td>
+          <td> Row 2 value 2 </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col col-right">
+    <pre><code ng-non-bindable>  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Column 1&lt;/td&gt;
+          &lt;td&gt;Column 2&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      {% for row in rows %}
+        &lt;tr&gt;
+          &lt;td&gt; {{ row.value1 }} &lt;/td&gt;
+          &lt;td&gt; {{ row.value2 }} &lt;/td&gt;
+        &lt;/tr&gt;
+      {% endfor %}
+    &lt;/tbody&gt;
+  &lt;/table&gt;</code></pre>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col col-left">
+    <progress class="team-1" max="1000" value="100">
+      <strong>Amount: 10</strong>
+    </progress>
+  </div>
+  <div class="col col-right">
+    <pre><code ng-non-bindable> &lt;progress class=&quot;team-1&quot; max=&quot;1000&quot; value=&quot;100&quot;&gt;
+    &lt;strong&gt;Amount: 10&lt;/strong&gt;
+  &lt;/progress&gt;</code></pre>
   </div>
 </div>
 

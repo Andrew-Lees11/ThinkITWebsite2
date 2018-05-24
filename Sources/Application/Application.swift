@@ -50,7 +50,7 @@ public class App {
         } catch let error {
             print(error)
         }
-        router.post("/input", handler: donationHandler)        
+        router.post("/input", handler: donationHandler)
         router.get("/scores") { request, response, next in
             var teamScores = [String: Double]()
             Donation.findAll { donations, error in
@@ -90,14 +90,19 @@ public class App {
                 next()
             }
         }
-        
+
         router.get("/") { request, response, next in
             let context: [String: Any] = ["teams": teams]
             print("teams context: \(context)")
             try response.render("teams.stencil", context: context)
             next()
         }
-        
+
+        router.get("/help") { request, response, next in
+            try response.render("Help.html")
+            next()
+        }
+
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
             guard let donatorName = request.queryParameters["donator"]?.lowercased() else {
@@ -134,9 +139,9 @@ public class App {
                 next()
             }
         }
-        
+
     }
-    
+
     func donationHandler(donation: Donation, completion: @escaping (Donation?, RequestError?) -> Void) {
         print("recieved donation: \(donation)")
         Donation.findAll() { allDonations, error in
@@ -155,11 +160,11 @@ public class App {
             }
         }
     }
-    
+
     public func run() throws {
         try postInit()
         Kitura.addHTTPServer(onPort: cloudEnv.port, with: router)
         Kitura.run()
     }
-    
+
 }

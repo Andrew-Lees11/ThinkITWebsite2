@@ -26,7 +26,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   float: left;
   display: block;
   color: #f2f2f2;
-  text-align: center;
+  text-align: center;s
   padding: 15px 15px;
   text-decoration: none;
   font-size: 19px;
@@ -35,6 +35,42 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 .navbar a:hover {
   background: #ddd;
   color: black;
+}
+
+input {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+table {
+  border: 1px solid lightgrey;
+  border-collapse: separate;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+}
+table td {
+  padding: 1rem 1rem;
+}
+table td:first-child {
+  border-radius: 10px 0 0 10px;
+}
+table td:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+table thead tr {
+  background: #a5e4d2;
+}
+table thead td {
+  color: white;
+  font-weight: bold;
+}
+table tbody tr:nth-child(even) {
+  background: #f2f2f2;
 }
 
 </style>
@@ -50,19 +86,51 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 
 <!-- About Section -->
 <div class="w3-container w3-padding-32 w3-center">
-  <h4></h4><br>
-  <h1>View All Donations page</h1><br>
+  <br>
+  <br>
+
  <div class="w3-padding-10">
-        <h4><b> your donations are:<br />
+    <input type="text" onkeyup="search()" placeholder="Search" title="Type in your search query">
+    <table class="donation-history">
+      <thead>
+        <tr>
+            <td>Team</td>
+            <td>User</td>
+            <td>Amount</td>
+        </tr>
+      </thead>
+      <tbody>
         {% for donation in donations %}
-        - Donation for: {{ donation.team }} by {{ donation.user }} of {{ donation.amount }}. <br />
+        <tr>
+          <td> {{ donation.team }} </td>
+          <td> {{ donation.user }} </td>
+          <td> {{ donation.amount }} </td>
+        </tr>
         {% endfor %}
-        </b></h4>
+      </tbody>
+    </table>
   </div>
-</div>
 
 <!-- End page content -->
 </div>
 
+<script>
+function search() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementsByTagName("input")[0];
+  filter = input.value.toUpperCase();
+  table = document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    var team = tr[i].getElementsByTagName("td")[0];
+    var user = tr[i].getElementsByTagName("td")[1];
+    if (team.innerHTML.toUpperCase().indexOf(filter) > -1 || user.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      tr[i].style.display = "";
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
+}
+</script>
 </body>
 </html>

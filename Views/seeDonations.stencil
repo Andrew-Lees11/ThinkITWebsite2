@@ -78,13 +78,14 @@ label {
   <a href="/scores">Scores</a>
   <a href="/donators">Donations</a>
   <a href="/donate">How to donate</a>
+  <a href="/help">Help</a>
 </div>
 
 <!-- About Section -->
 <div class="w3-container w3-padding-32 w3-center">
   <br>
   <br>
-  <img src="../public/images/thinkit.png" alt="ThinkIT">
+  <img src="images/thinkit.png" alt="ThinkIT">
   <h1>View Donations</h1>
   <div class="w3-padding-10">
     <h5>To view your donations and remaining money please enter your twitter handle in the form below.</h5>

@@ -47,6 +47,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .team::-webkit-progress-value {
@@ -54,11 +55,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 }
 
 .team-name {
-  color: #fff;
+  color: black;
   line-height: 1;
   position: absolute;
   top: 1em;
   font-size: 20px;
+  margin-left: 10px;
 }
 
 progress, progress[role] {
@@ -71,10 +73,10 @@ progress, progress[role] {
   width: 70%;
 }
 
-.team-Ada Lovelace::-webkit-progress-value {
+.team-1::-webkit-progress-value {
   background: red;
 }
-.team-Ada Lovelace::-moz-progress-bar {
+.team-1::-moz-progress-bar {
   background: red;
 }
 .team-2::-webkit-progress-value {
@@ -123,37 +125,31 @@ progress, progress[role] {
 </style>
 <body>
 
-<div class="navbar">
-  <a href="/">Home</a>
-  <a href="/scores">Scores</a>
-  <a href="/donators">Donations</a>
-  <a href="/donate">How to donate</a>
-  <a href="/help">Help</a>
-</div>
-
-<!-- About Section -->
-<div class="w3-container w3-padding-32">
-  <br>
-  <br>
-
-  <h2>Hi <b>{{ donator }}</b>! Your donations are:</h2>
-  <ul class="team-list">
-    {% for eachTeam in teams %}
-    <li class="team">
-     <div class="team-name">{{ eachTeam.team }}</div>
-     <progress class="team-{{ eachTeam.index }}" max="1000" value="{{ eachTeam.amount }}">
-       <strong>Amount: {{ eachTeam.amount }}</strong>
-     </progress>
-   </li>
-   {% endfor %}
-  </ul>
+  <div class="navbar">
+    <a href="/">Home</a>
+    <a href="/scores">Scores</a>
+    <a href="/donators">Donations</a>
+    <a href="/donate">How to donate</a>
+    <a href="/help">Help</a>
   </div>
-</div>
-<hr>
 
+  <!-- About Section -->
+  <div class="w3-container w3-padding-32">
+    <br>
+    <br>
 
-<!-- End page content -->
-</div>
+    <h2>Hi <b>{{ donator }}</b>! Your donations are:</h2>
+    <ul class="team-list">
+      {% for eachTeam in teams %}
+      <li class="team">
+       <div class="team-name">{{ eachTeam.team }}</div>
+       <progress class="team-{{ eachTeam.index + 1 }}" max="1000" value="{{ eachTeam.amount }}">
+         <strong>Amount: {{ eachTeam.amount }}</strong>
+       </progress>
+       </li>
+       {% endfor %}
+      </ul>
+  </div>
 
 </body>
 </html>
