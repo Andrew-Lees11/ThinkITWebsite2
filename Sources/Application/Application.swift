@@ -98,11 +98,6 @@ public class App {
             next()
         }
 
-        router.get("/help") { request, response, next in
-            try response.render("Help.html")
-            next()
-        }
-
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
             guard let donatorName = request.queryParameters["donator"]?.lowercased() else {
@@ -116,9 +111,11 @@ public class App {
                     return next()
                 }
                 print("donations: \(donations)")
+                var totalDonations: Double = 0
                 for donation in donations {
                     if donation.username.lowercased() == requestDonator {
                         donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
+                        totalDonations = totalDonations + donation.amount
                     }
                 }
                 print("donator.donations[donation.team]: \(donator.donations)")
@@ -130,6 +127,7 @@ public class App {
                     tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0, "index": index])
                 }
                 context["teams"] = tempTeams
+                context["totalDonations"] = totalDonations
                 print("donator context: \(context)")
                 do {
                     try response.render("donator.stencil", context: context)

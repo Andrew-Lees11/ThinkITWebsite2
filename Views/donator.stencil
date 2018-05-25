@@ -45,9 +45,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 
 .team {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   position: relative;
-  margin-bottom: 10px;
 }
 
 .team::-webkit-progress-value {
@@ -55,11 +55,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 }
 
 .team-name {
-  color: black;
+  font-size: 2em;
+  font-weight: 800;
+  width: 100%;
+}
+
+.team-amount {
+  color: white;
   line-height: 1;
   position: absolute;
-  top: 1em;
-  font-size: 20px;
+  top: 2em;
+  font-size: 2em;
   margin-left: 10px;
 }
 
@@ -130,6 +136,7 @@ progress, progress[role] {
     <a href="/scores">Scores</a>
     <a href="/donators">Donations</a>
     <a href="/donate">How to donate</a>
+    <a href="/example">Example</a>
     <a href="/help">Help</a>
   </div>
 
@@ -138,17 +145,18 @@ progress, progress[role] {
     <br>
     <br>
 
-    <h2>Hi <b>{{ donator }}</b>! Your donations are:</h2>
+    <h2>Hi <b>{{ donator }}</b>! You have used up £{{ totalDonations }} out of your total allowance of £1000.</h2>
     <ul class="team-list">
       {% for eachTeam in teams %}
       <li class="team">
        <div class="team-name">{{ eachTeam.team }}</div>
+       <div class="team-amount">£{{ eachTeam.amount }}</div>
        <progress class="team-{{ eachTeam.index + 1 }}" max="1000" value="{{ eachTeam.amount }}">
-         <strong>Amount: {{ eachTeam.amount }}</strong>
+         <strong>Amount: £{{ eachTeam.amount }}</strong>
        </progress>
-       </li>
-       {% endfor %}
-      </ul>
+     </li>
+     {% endfor %}
+    </ul>
   </div>
 
 </body>

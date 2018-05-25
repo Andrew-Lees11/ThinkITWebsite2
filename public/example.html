@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<title>ThinkIT Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+.w3-bar-block .w3-bar-item {padding:20px}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 15px;
+  text-decoration: none;
+  font-size: 19px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+.title {
+  text-align: right;
+}
+
+.description {
+  text-align: left;
+}
+
+</style>
+<body>
+
+<!-- Top menu -->
+<div class="navbar">
+  <a href="/">Home</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/example">Example</a>
+  <a href="/help">Help</a>
+</div>
+
+<!-- About Section -->
+<div class="w3-container w3-padding-32 w3-center">
+  <br>
+  <div class="title">
+    <h1>Example</h1>
+  </div>
+
+  <div class="w3-container">
+    <div class="w3-half">
+      <img src="images/thinkit.png" width="300" height="300">
+    </div>
+
+    <div class="w3-half description">
+      <h2>About this project  </h2>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris est lectus, pharetra non commodo sit amet, pulvinar ut nulla. Pellentesque vitae mi mauris. Curabitur tempus dui ac fermentum pellentesque. Sed eros libero, congue vel ornare a, gravida sed erat. Quisque bibendum ultrices magna pharetra aliquet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus finibus volutpat ullamcorper. Sed sed nunc eget magna commodo maximus id a est. Ut a risus turpis. Proin lacinia luctus consequat.</p>
+
+      <br>
+      <p>To see raised donations click the button bellow:</p>
+      <a href="/scores" class="w3-btn w3-black">Link Button</a>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="w3-third w3-container">
+    <p>Donate £50 Twitter link widget</p>
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=@thinkITdemo%20%23VoteExample%20Donate%20%C2%A350"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
+  </div>
+
+  <div class="w3-third w3-container">
+    <p>Donate £100 Twitter link widget</p>
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button w3-third"
+      href="https://twitter.com/intent/tweet?text=@thinkITdemo%20%23VoteExample%20Donate%20%C2%A3100"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
+  </div>
+
+  <div class="w3-third w3-container">
+    <p>Donate £200 Twitter link widget</p>
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=@thinkITdemo%20%23VoteExample%20Donate%20%C2%A3200"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
+  </div>
+</div>
+
+</body>
+</html>
