@@ -51,7 +51,12 @@ public class App {
             print(error)
         }
         router.post("/input", handler: donationHandler)
+        router.get("/toggle", handler: toggleHandler)
         router.get("/scores") { request, response, next in
+            guard !hideScores else {
+                try response.render("hide.stencil", context: [:])
+                return next()
+            }
             var teamScores = [String: Double]()
             Donation.findAll { donations, error in
                 guard let donations = donations else {
@@ -100,9 +105,12 @@ public class App {
 
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
-            guard let donatorName = request.queryParameters["donator"]?.lowercased() else {
+            guard var donatorName = request.queryParameters["donator"]?.lowercased() else {
                 try response.render("seeDonations.stencil", context: [:]).end()
                 return
+            }
+            if donatorName.hasPrefix("@") {
+                donatorName = String(donatorName.dropFirst())
             }
             let requestDonator = "tweets/\(donatorName)"
             var donator = Donator(username: requestDonator, donations: [:])
@@ -120,7 +128,7 @@ public class App {
                 }
                 print("donator.donations[donation.team]: \(donator.donations)")
                 print("requestDonator: \(requestDonator)")
-                var context: [String:Any] = ["donator": requestDonator]
+                var context: [String:Any] = ["donator": donatorName]
                 print("context: \(context)")
                 var tempTeams: [[String:Any]] = []
                 for (index, team) in teams.enumerated() {
@@ -140,24 +148,44 @@ public class App {
 
     }
 
-    func donationHandler(donation: Donation, completion: @escaping (Donation?, RequestError?) -> Void) {
+    func donationHandler(donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
         print("recieved donation: \(donation)")
         Donation.findAll() { allDonations, error in
             let existingUser = allDonations?.filter({$0.username == donation.username})
             let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
             if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
                 print("saved full donation: \(donation)")
-                donation.save(completion)
+                donation.save({ (donation, error) in
+                    guard let donation = donation else {
+                        return completion(nil, error)
+                    }
+                    return completion(DonationMessage(donation: donation), nil)
+                })
             } else if totalDonations < userCap {
                 let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
                 print("saved partial donation: \(adjustedDonation)")
-                adjustedDonation.save(completion)
+                adjustedDonation.save({ (donation, error) in
+                    guard let donation = donation else {
+                        return completion(nil, error)
+                    }
+                    return completion(DonationMessage(donation: donation), nil)
+                })
             } else {
                 print("Donator out of money: \(donation)")
-                completion(nil, .notAcceptable)
+                completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
             }
         }
     }
+    
+    func toggleHandler(toggle: ToggleQuery, completion: @escaping (ToggleQuery?, RequestError?) -> Void) {
+        if toggle.token == ProcessInfo.processInfo.environment["toggleToken"] {
+            hideScores = toggle.hide
+            completion(toggle, nil)
+        } else {
+            completion(nil, .unauthorized)
+        }
+    }
+    
 
     public func run() throws {
         try postInit()

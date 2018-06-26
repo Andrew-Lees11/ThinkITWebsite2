@@ -96,25 +96,7 @@ td {
 
 <div class="w3-container w3-padding-32 w3-center">
   <h4></h4><br>
-   <div class="w3-padding-10">
-     <table>
-      <tr>
-        <th>Team</th>
-        <th>Donations</th>
-      </tr>
-      {% for donation in donations %}
-        <tr>
-          <td>
-             <a href="teams/{{ donation.team }}">
-                  <img class="small" src="images/{{ donation.team }}/logo.svg">
-             </a>
-            {{ donation.team }}
-          </td>
-          <td>{{ donation.amount }}</td>
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
+  <h4>Team Scores have been hidden. Find out the winner at the end of the expo!</h4><br>
 </div>
 
 </body>
