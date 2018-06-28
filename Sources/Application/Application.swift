@@ -78,6 +78,7 @@ public class App {
                 next()
             }
         }
+        
         router.get("/alldonations") { request, response, next in
             Donation.findAll { donations, error in
                 guard let donations = donations else {
@@ -153,7 +154,7 @@ public class App {
         Donation.findAll() { allDonations, error in
             let existingUser = allDonations?.filter({$0.username == donation.username})
             let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
-            if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+            if noLimit || donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
                 print("saved full donation: \(donation)")
                 donation.save({ (donation, error) in
                     guard let donation = donation else {
@@ -179,7 +180,12 @@ public class App {
     
     func toggleHandler(toggle: ToggleQuery, completion: @escaping (ToggleQuery?, RequestError?) -> Void) {
         if toggle.token == ProcessInfo.processInfo.environment["toggleToken"] {
-            hideScores = toggle.hide
+            if let hide = toggle.hide {
+                hideScores = hide
+            }
+            if let newLimit = toggle.nolimit {
+                noLimit = newLimit
+            }
             completion(toggle, nil)
         } else {
             completion(nil, .unauthorized)

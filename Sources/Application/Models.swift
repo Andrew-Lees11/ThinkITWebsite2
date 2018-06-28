@@ -31,7 +31,8 @@ struct Donator {
 
 struct ToggleQuery: QueryParams, Codable {
     let token: String
-    let hide: Bool
+    let hide: Bool?
+    let nolimit: Bool?
 }
 
 let teams: [String] = ["Ada Lovelace", "Elizabeth Blackwell", "Grace Hopper", "Jane Goodall", "Katherine Johnson", "Mae Jemison", "Marie Curie", "Rosalind Franklin"]
@@ -39,4 +40,5 @@ let teams: [String] = ["Ada Lovelace", "Elizabeth Blackwell", "Grace Hopper", "J
 let userCap: Double = 1000
 let unlimitedUser: String? = ProcessInfo.processInfo.environment["unlimitedUser"]
 var hideScores: Bool = false
+var noLimit: Bool = false
 
