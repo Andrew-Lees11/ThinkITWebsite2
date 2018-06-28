@@ -10,7 +10,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 .w3-bar-block .w3-bar-item {padding:20px}
 .wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
 }
 
@@ -37,65 +37,44 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
+img {
+  width: 15%;
+  height: auto;
+}
+
 </style>
 <body>
 
     <!-- Top menu -->
 <div class="navbar">
   <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donate</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/example">Example</a>
+  <a href="/help">Help</a>
 </div>
 
 <hr id="Welcome">
 
 <!-- About Section -->
 <div class="w3-container w3-padding-32 w3-center">
-  <h1>ThinkIT Webpage</h1><br>
+  <h1>ThinkIT 2018</h1><br>
  <div class="w3-padding-10">
-    <h4><b>Welcome to the ThinkIT Website</b></h4>
+    <h4><b>Welcome to the ThinkIT 2018 Website</b></h4>
     <p>Please view the student product pages below and donate via twitter!</p>
   </div>
-</div>
-<hr>
-
-<!-- !PAGE CONTENT! -->
-<hr id="teams">
-<div class="w3-container w3-padding-32 w3-center" style="max-width:1200px">
-  <h1>Teams</h1><br>
+  <hr>
   <!-- First Photo Grid-->
   <div class="wrapper">
       {% for team in teams %}
       <div class="w3-center">
         <a href="teams/{{ team }}">
-            <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Documentation/KituraLogo-wide.png" height="30" alt="Kitura">
+          <img src="images/{{ team }}/logo.svg" height="30" alt="Team logo">
         </a>
-        <h4> "project" by {{ team }} </h4>
+        <h4> {{ team }} </h4>
       </div>
       {% endfor %}
-  </div>
-  <hr>
-
-  <!-- <hr id="submitmeal">
-
-  <div class="w3-container w3-padding-32 w3-center">
-     <h1>Add your own meal</h1><br>
-  <form action="foodtracker" method="post" enctype="multipart/form-data">
-     Name: <input type="text" name="name"><br> <br>
-     Rating: <input type="range" name="rating" min="0" max="5"><br> <br>
-     File: <input type="file" name="photo"><br> <br>
-     <input type="submit" value="Submit">
-  </form>
-  </div>
-  <hr> -->
-
-  <div class="w3-container w3-padding-32 w3-center">
-      <h4>View your Donations</h4>
-      <form action="donators" method="get">
-          Twitter Handle: <input type="text" name="donator" required="required"><br><br>
-          <input type="submit" value="Submit">
-      </form>
   </div>
 
 <hr id="links">
@@ -127,7 +106,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
       </ul>
     </div>
   </footer>
-  <hr>
 <!-- End page content -->
 </div>
 

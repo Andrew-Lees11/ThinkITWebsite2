@@ -50,8 +50,13 @@ public class App {
         } catch let error {
             print(error)
         }
-        router.post("/input", handler: donationHandler)        
+        router.post("/input", handler: donationHandler)
+        router.get("/toggle", handler: toggleHandler)
         router.get("/scores") { request, response, next in
+            guard !hideScores else {
+                try response.render("hide.stencil", context: [:])
+                return next()
+            }
             var teamScores = [String: Double]()
             Donation.findAll { donations, error in
                 guard let donations = donations else {
@@ -73,6 +78,7 @@ public class App {
                 next()
             }
         }
+        
         router.get("/alldonations") { request, response, next in
             Donation.findAll { donations, error in
                 guard let donations = donations else {
@@ -90,37 +96,47 @@ public class App {
                 next()
             }
         }
-        
+
         router.get("/") { request, response, next in
             let context: [String: Any] = ["teams": teams]
             print("teams context: \(context)")
             try response.render("teams.stencil", context: context)
             next()
         }
-        
+
         router.get("/donators") { request, response, next in
             print("request query parameters: \(request.queryParameters)")
-            guard let requestDonator = request.queryParameters["donator"] else {
+            guard var donatorName = request.queryParameters["donator"]?.lowercased() else {
                 try response.render("seeDonations.stencil", context: [:]).end()
                 return
             }
-
+            if donatorName.hasPrefix("@") {
+                donatorName = String(donatorName.dropFirst())
+            }
+            let requestDonator = "tweets/\(donatorName)"
             var donator = Donator(username: requestDonator, donations: [:])
             Donation.findAll { donations, error in
                 guard let donations = donations else {
                     return next()
                 }
+                print("donations: \(donations)")
+                var totalDonations: Double = 0
                 for donation in donations {
-                    if donation.username == requestDonator {
+                    if donation.username.lowercased() == requestDonator {
                         donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
+                        totalDonations = totalDonations + donation.amount
                     }
                 }
-                var context: [String:Any] = ["donator": requestDonator]
+                print("donator.donations[donation.team]: \(donator.donations)")
+                print("requestDonator: \(requestDonator)")
+                var context: [String:Any] = ["donator": donatorName]
+                print("context: \(context)")
                 var tempTeams: [[String:Any]] = []
-                for team in teams {
-                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0])
+                for (index, team) in teams.enumerated() {
+                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0, "index": index])
                 }
                 context["teams"] = tempTeams
+                context["totalDonations"] = totalDonations
                 print("donator context: \(context)")
                 do {
                     try response.render("donator.stencil", context: context)
@@ -130,32 +146,57 @@ public class App {
                 next()
             }
         }
-        
+
     }
-    
-    func donationHandler(donation: Donation, completion: @escaping (Donation?, RequestError?) -> Void) {
+
+    func donationHandler(donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
         print("recieved donation: \(donation)")
         Donation.findAll() { allDonations, error in
             let existingUser = allDonations?.filter({$0.username == donation.username})
             let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
-            if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+            if noLimit || donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
                 print("saved full donation: \(donation)")
-                donation.save(completion)
+                donation.save({ (donation, error) in
+                    guard let donation = donation else {
+                        return completion(nil, error)
+                    }
+                    return completion(DonationMessage(donation: donation), nil)
+                })
             } else if totalDonations < userCap {
                 let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
                 print("saved partial donation: \(adjustedDonation)")
-                adjustedDonation.save(completion)
+                adjustedDonation.save({ (donation, error) in
+                    guard let donation = donation else {
+                        return completion(nil, error)
+                    }
+                    return completion(DonationMessage(donation: donation), nil)
+                })
             } else {
                 print("Donator out of money: \(donation)")
-                completion(nil, .notAcceptable)
+                completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
             }
         }
     }
     
+    func toggleHandler(toggle: ToggleQuery, completion: @escaping (ToggleQuery?, RequestError?) -> Void) {
+        if toggle.token == ProcessInfo.processInfo.environment["toggleToken"] {
+            if let hide = toggle.hide {
+                hideScores = hide
+            }
+            if let newLimit = toggle.nolimit {
+                noLimit = newLimit
+            }
+            completion(toggle, nil)
+        } else {
+            completion(nil, .unauthorized)
+        }
+    }
+    
+
     public func run() throws {
         try postInit()
         Kitura.addHTTPServer(onPort: cloudEnv.port, with: router)
         Kitura.run()
     }
-    
+
 }

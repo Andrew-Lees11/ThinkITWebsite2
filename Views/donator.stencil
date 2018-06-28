@@ -37,34 +37,127 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
+.team-list {
+  list-style: none;
+  margin: 0;
+  padding: 1em;
+}
+
+.team {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.team::-webkit-progress-value {
+  width: 0px;
+}
+
+.team-name {
+  font-size: 2em;
+  font-weight: 800;
+  width: 100%;
+}
+
+.team-amount {
+  color: white;
+  line-height: 1;
+  position: absolute;
+  top: 2em;
+  font-size: 2em;
+  margin-left: 10px;
+}
+
+progress, progress[role] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-size: auto;
+  height: 50px;
+  width: 70%;
+}
+
+.team-1::-webkit-progress-value {
+  background: red;
+}
+.team-1::-moz-progress-bar {
+  background: red;
+}
+.team-2::-webkit-progress-value {
+  background: orange;
+}
+.team-2::-moz-progress-bar {
+  background: orange;
+}
+.team-3::-webkit-progress-value {
+  background: blue;
+}
+.team-3::-moz-progress-bar {
+  background: blue;
+}
+.team-4::-webkit-progress-value {
+  background: yellow;
+}
+.team-4::-moz-progress-bar {
+  background: yellow;
+}
+.team-5::-webkit-progress-value {
+  background: green;
+}
+.team-5::-moz-progress-bar {
+  background: green;
+}
+.team-6::-webkit-progress-value {
+  background: purple;
+}
+.team-6::-moz-progress-bar {
+  background: purple;
+}
+.team-7::-webkit-progress-value {
+  background: indigo;
+}
+.team-7::-moz-progress-bar {
+  background: indigo;
+}
+.team-8::-webkit-progress-value {
+  background: turquoise;
+}
+.team-8::-moz-progress-bar {
+  background: turquoise;
+}
+
 </style>
 <body>
 
-<!-- Top menu -->
-<div class="navbar">
-  <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donations</a>
-</div>
-
-<!-- About Section -->
-<div class="w3-container w3-padding-32 w3-center">
-  <h4></h4><br>
-  <h1>Your donations page</h1><br>
- <div class="w3-padding-10">
-    <h4><b>Hello {{ donator }}</b></h4>
-    <h4><b> your donations are:<br />
-    {% for team in teams %}
-    - You donated: {{ team.amount }} to team {{ team.team }}. <br />
-    {% endfor %}
-    </b></h4>
+  <div class="navbar">
+    <a href="/">Home</a>
+    <a href="/scores">Scores</a>
+    <a href="/donators">Donations</a>
+    <a href="/donate">How to donate</a>
+    <a href="/example">Example</a>
+    <a href="/help">Help</a>
   </div>
-</div>
-<hr>
 
-<!-- End page content -->
-</div>
+  <!-- About Section -->
+  <div class="w3-container w3-padding-32">
+    <br>
+    <br>
+
+    <h2>Hi <b>{{ donator }}</b>! You have used up £{{ totalDonations }} out of your total allowance of £1000.</h2>
+    <ul class="team-list">
+      {% for eachTeam in teams %}
+      <li class="team">
+       <div class="team-name">{{ eachTeam.team }}</div>
+       <div class="team-amount">£{{ eachTeam.amount }}</div>
+       <progress class="team-{{ eachTeam.index + 1 }}" max="1000" value="{{ eachTeam.amount }}">
+         <strong>Amount: £{{ eachTeam.amount }}</strong>
+       </progress>
+     </li>
+     {% endfor %}
+    </ul>
+  </div>
 
 </body>
 </html>

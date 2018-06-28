@@ -37,32 +37,198 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
+.section {
+  padding: 10px;
+  border-bottom: 3px dotted #66dab9;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.last-section {
+  border-bottom: none;
+}
+
+.info {
+  font-size: 16px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.team {
+  margin: 0 auto;
+  flex-grow: 25%;
+  padding: 10px;
+}
+
+.team-logo {
+  height: 70px;
+  width: 70px;
+  background: white;
+  line-height: 70px;
+  border-radius: 10px;
+  box-shadow: 0 4px 9px 0 rgba(23, 28, 33, .06);
+}
+
+.team-name {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.team-desc {
+  margin-top: -10px;
+  overflow: hidden;
+  font-size: 10px;
+}
+
+.tweet {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 </style>
 <body>
 
 <!-- Top menu -->
 <div class="navbar">
   <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donations</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/example">Example</a>
+  <a href="/help">Help</a>
 </div>
 
 <h1>How to donate</h1>
 
-<p>
-Every person has £1000 to donate across the teams
+<div class="section">
+  <h3 class="center">
+  There are 8 teams in total:
+  </h3>
+  <div class="team-list">
+    <div class="team">
+      <div class="team-logo">
+          <img src="./images/Ada Lovelace/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Ada Lovelace</h3>
+        <p class="team-desc">Computing</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Elizabeth Blackwell/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Elizabeth Blackwell</h3>
+        <p class="team-desc">Medicine</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Grace Hopper/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Grace Hopper</h3>
+        <p class="team-desc">Programming</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Jane Goodall/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Jane Goodall</h3>
+        <p class="team-desc">Biologist</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Katherine Johnson/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Katherine Johnson</h3>
+        <p class="team-desc">NASA mathematician</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Mae Jemison/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Mae Jemison</h3>
+        <p class="team-desc">Astronomer</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Marie Curie/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Marie Curie</h3>
+        <p class="team-desc">Chemist</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-logo">
+        <img src="./images/Rosalind Franklin/logo.svg">
+      </div>
+      <div class="team-description">
+        <h3 class="team-name">Rosalind Franklin</h3>
+        <p class="team-desc">Chemist</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-Go to twitter and donate @team with the amount you want to donate:
+<div class="section">
+  <div class="info">
+    <p class="center"> Every person has £1000 to donate across the teams. You can either choose your favourite team and donate your entire budget to them, or you can split it up between your favourites. Make sure to take a look at everybody's project before deciding. </p>
+  </div>
+</div>
 
-E.g. @team1 I loved your project. I'm investing £400 to your team.
-</p>
+<div class="section">
+  <div class="info">
+    <div class="center">
+      To donate either use the Twitter widget embedded on each team's website:
+      <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+      <a class="twitter-share-button"
+          href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3100"
+          data-size="large"
+          data-url="a"
+          >
+          Tweet</a>
+    </div>
+  </div>
 
-<p>Twitter link widget</p>
-<a href="https://twitter.com/intent/tweet?screen_name=thinkITdemo&ref_src=twsrc%5Etfw" class="twitter-mention-button" data-show-count="false">Tweet to @thinkITdemo</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div class="info">
+    <p class="center"> Or go to twitter and donate @ThinkITHursley with the hashtag #vote&lt;teamname&gt; and the amount you want to donate: </p>
+    <img class="tweet" src="./images/example.png">
+  </div>
 
-<p>View current scores</p>
- <a href="https://thinkitwebsite.eu-gb.mybluemix.net/scores">Scores link</a>
+  <div class="info">
+      <p class="center"> If you don't want to use your own account or don't own a Twitter account, we have one you can use! </p>
+  </div>
+</div>
+
+<div class="section last-section">
+  <div class="info">
+    <p class="center"> To view current scores click <a href="https://thinkitwebsite.eu-gb.mybluemix.net/scores">this</a> link. Whichever team was offered the most donations at the end of the day will win our special ThinkIT prize. </p>
+  </div>
+</div>
 
 </body>
 </html>

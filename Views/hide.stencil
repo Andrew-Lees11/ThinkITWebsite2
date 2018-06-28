@@ -37,35 +37,51 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
-button {
-  background-color: #66dab9;
-  border: none;
+table {
+  background: white;
+  border-radius: 3px;
+  border-collapse: collapse;
+  margin: auto;
+  max-width: 60%;
+  width: 100%;
+  box-shadow: 0 5px 10px lightgrey;
+}
+
+th {
   color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: white;
-  color: black;
-  border: 2px solid #66dab9;
-}
-
-.title {
-  text-align: right;
-}
-
-.description {
+  background: #66dab9;
+  border-bottom: 4px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  font-size: 23px;
+  font-weight: 100;
+  padding: 12px;
   text-align: left;
+  vertical-align: middle;
 }
 
+.small {
+  width: 60px;
+  height: auto;
+}
+
+tr {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  color: #333;
+  font-size: 16px;
+}
+
+td {
+  background: white;
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 18px;
+  border-right: 1px solid lightgrey;
+}
 </style>
 <body>
+
 
 <!-- Top menu -->
 <div class="navbar">
@@ -77,37 +93,10 @@ button:hover {
   <a href="/help">Help</a>
 </div>
 
-<!-- About Section -->
+
 <div class="w3-container w3-padding-32 w3-center">
-  <br>
-  <div class="title">
-    <!-- the title -->
-  </div>
-
-  <div class="w3-container">
-    <div class="w3-half">
-      <!-- the logo image -->
-    </div>
-
-    <div class="w3-half description">
-      <!-- the description -->
-    </div>
-  </div>
-
-  <br>
-  <br>
-
-  <div class="w3-third w3-container">
-    <!-- the £50 Twitter widget -->
-  </div>
-
-  <div class="w3-third w3-container">
-    <!-- the £100 Twitter widget -->
-  </div>
-
-  <div class="w3-third w3-container">
-    <!-- the £200 Twitter widget -->
-  </div>
+  <h4></h4><br>
+  <h4>Team Scores have been hidden. Find out the winner at the end of the expo!</h4><br>
 </div>
 
 </body>

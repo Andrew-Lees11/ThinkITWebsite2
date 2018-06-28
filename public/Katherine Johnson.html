@@ -37,30 +37,78 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   color: black;
 }
 
+button {
+  background-color: #66dab9;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #66dab9;
+}
+
+.title {
+  text-align: right;
+}
+
+.description {
+  text-align: left;
+}
+
 </style>
 <body>
 
 <!-- Top menu -->
 <div class="navbar">
   <a href="/">Home</a>
-  <a href="/scores">scores</a>
-  <a href="/donators">See Donations</a>
-  <a href="/donate">How to Donations</a>
+  <a href="/scores">Scores</a>
+  <a href="/donators">Donations</a>
+  <a href="/donate">How to donate</a>
+  <a href="/example">Example</a>
+  <a href="/help">Help</a>
 </div>
 
 <!-- About Section -->
 <div class="w3-container w3-padding-32 w3-center">
-  <h4></h4><br>
-  <h1>Marie Curie</h1><br>
+  <br>
+  <div class="title">
+    <!-- the title -->
+  </div>
+
+  <div class="w3-container">
+    <div class="w3-half">
+      <!-- the logo image -->
+    </div>
+
+    <div class="w3-half description">
+      <!-- the description -->
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="w3-third w3-container">
+    <!-- the £50 Twitter widget -->
+  </div>
+
+  <div class="w3-third w3-container">
+    <!-- the £100 Twitter widget -->
+  </div>
+
+  <div class="w3-third w3-container">
+    <!-- the £200 Twitter widget -->
+  </div>
 </div>
-<hr>
-
-
-<p>Twitter link widget</p>
-<a href="https://twitter.com/intent/tweet?screen_name=thinkITdemo&ref_src=twsrc%5Etfw" class="twitter-mention-button" data-show-count="false">Tweet to @thinkITdemo</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>Website scores</p>
-<a href="/scores">Scores link</a>
 
 </body>
 </html>
